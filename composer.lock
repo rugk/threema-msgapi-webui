@@ -1,0 +1,87 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "38b83f77516346c652b4ed3dec4f874a",
+    "content-hash": "8100bb784dadce5dd1942c817ec8c35d",
+    "packages": [
+        {
+            "name": "rugk/threema-msgapi-sdk-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rugk/threema-msgapi-sdk-php.git",
+                "reference": "c77d16c69f91eabe2cc73e299c4a96f5315e0f80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rugk/threema-msgapi-sdk-php/zipball/c77d16c69f91eabe2cc73e299c4a96f5315e0f80",
+                "reference": "c77d16c69f91eabe2cc73e299c4a96f5315e0f80",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "suggest": {
+                "ext-libsodium": "Installing libsodium is highly recommend! If you use a 64bit version of PHP you can also use a fallback to a pure PHP implementation, but for security reasons it is always recommend to use libsodium. When installing libsodium it is recommend to choose the latest avaliable version. If you cannot or do not want to do this install at least libsodium v1.1.0 or higher as this is the first stable version of the extension."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "source/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Threema GmbH",
+                    "email": "support-gateway-service@threema.ch",
+                    "homepage": "https://gateway.threema.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "rugk",
+                    "homepage": "https://github.com/rugk",
+                    "role": "Maintainer of GitHub repository"
+                }
+            ],
+            "description": "Threema PHP-SDK to integrate Threema Gateway in your environment. This SDK allows you to send end-to-end-encrypted messages to Threema users using the Threema Gateway.",
+            "homepage": "https://gateway.threema.ch/en/developer/sdk-php",
+            "keywords": [
+                "Curve25519",
+                "Messenger",
+                "Threema",
+                "encrypted",
+                "encryption",
+                "gateway",
+                "libsodium",
+                "message",
+                "mobile",
+                "nacl",
+                "notification",
+                "notifications",
+                "security",
+                "sms gateway",
+                "switzerland"
+            ],
+            "time": "2016-01-10 20:07:37"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "rugk/threema-msgapi-sdk-php": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4.0"
+    },
+    "platform-dev": []
+}

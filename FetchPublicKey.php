@@ -8,13 +8,12 @@
 header('Content-Type: text/plain');
 
 //include SDK
-require_once '../../source/bootstrap.php'; //use source
-// require_once '../../threema_msgapi.phar'; //use phar
+require_once 'include/BootstrapSdk.php';
 
 //include credentials
 require_once 'include/GlobalConstants.php';
-require_once FILENAME_CONNCRED;
-require_once FILENAME_PRIVKEY;
+include_once FILENAME_CONNCRED;
+include_once FILENAME_PRIVKEY;
 
 //include web files used
 require_once 'include/GlobalConstants.php';

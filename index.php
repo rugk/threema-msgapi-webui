@@ -1,4 +1,17 @@
-<!--
+<?php
+// only shows content when it is not parsed by a PHP interpreter
+if (false):
+?>
+<!-- PHP parsing error message -->
+<div class="warning">
+    You are viewing this file within a browser. However you do need to call this file
+    through PHP to view it correctly. To do this please setup a local server with
+    PHP support and access the file like this: <code>http://127.0.0.1/threema-msgapi-sdk-php/samples/web/</code>.
+</div>
+
+<?php
+endif
+?>
 <?php
 /**
  * @author rugk
@@ -53,7 +66,7 @@ $fileConnCredentErr = '';
 if (!file_exists(FILENAME_CONNCRED)) {
     $fileConnCredentErr .= ' The file does not exist.';
 } else {
-    require_once FILENAME_CONNCRED;
+    include_once FILENAME_CONNCRED;
     if (!defined('MSGAPI_GATEWAY_THREEMA_ID') ||
         !defined('MSGAPI_GATEWAY_THREEMA_ID_SECRET')
     ) {
@@ -89,7 +102,7 @@ $fileChkPrivateKeyErr = '';
 if (!file_exists(FILENAME_PRIVKEY)) {
     $fileChkPrivateKeyErr .= ' The file does not exist.';
 } else {
-    require_once FILENAME_PRIVKEY;
+    include_once FILENAME_PRIVKEY;
     if (!defined('MSGAPI_PRIVATE_KEY')) {
         $fileChkPrivateKeyErr .= ' Not all constants are defined.';
     } else {
@@ -101,7 +114,6 @@ if (!file_exists(FILENAME_PRIVKEY)) {
     }
 }
 ?>
--->
 
 <!DOCTYPE html>
 <html>
@@ -112,20 +124,6 @@ if (!file_exists(FILENAME_PRIVKEY)) {
         <link rel="stylesheet" type="text/css" href="assets/css/common.css" charset="utf-8">
     </head>
     <body>
-        <?php
-        // only shows content when it is not parsed by a PHP interpreter
-        if (false):
-        ?>
-        <!-- PHP parsing error message -->
-        <div class="warning">
-            You are viewing this file within a browser. However you do need to call this file
-            through PHP to view it correctly. To do this please setup a local server with
-            PHP support and access the file like this: <code>http://127.0.0.1/threema-msgapi-sdk-php/samples/web/</code>.
-        </div>
-        <?php
-        endif
-        ?>
-
         <h1 id="devui">Development UI - MSGAPI-PHP-SDK - Threema Gateway</h1>
         <p>
             This is a development UI for the <a href="https://github.com/rugk/threema-msgapi-sdk-php" title="Threema Gateway PHP SDK">Threema MSGAPI PHP-SDK</a>.

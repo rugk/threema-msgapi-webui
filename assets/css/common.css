@@ -123,6 +123,7 @@ input[type=text]:invalid {
   box-sizing: border-box;
   height: 80px;
   width: 290px;
+  min-height: 25px;
   min-width: 100%;
   resize: both;
 }
