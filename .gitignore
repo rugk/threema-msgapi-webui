@@ -3,8 +3,7 @@ ConnectionCredentials.php
 PrivateKey.php
 
 # Ignore public keystore files
-keystore.txt
-keystore.php
+keystore.*
 
 # Ignore key files
 *.key
