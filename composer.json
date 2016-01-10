@@ -1,0 +1,24 @@
+{
+    "name": "rugk/threema-msgapi-webui",
+    "type": "library",
+    "description": "Threema PHP-WebUI as an example integration of the Threema Gateway in a PHP site. You can use it for testing.",
+    "keywords": ["threema", "message", "messenger", "mobile", "notifications", "notification", "gateway", "sms gateway", "security", "encryption", "encrypted", "switzerland", "libsodium", "nacl", "Curve25519", "website", "example"],
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "rugk",
+            "homepage": "https://github.com/rugk",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "rugk@posteo.de",
+        "issues": "https://github.com/rugk/threema-msgapi-webui/issues",
+        "wiki": "https://github.com/rugk/threema-msgapi-webui/wiki",
+        "source": "https://github.com/rugk/threema-msgapi-webui"
+    },
+    "require": {
+        "php": ">=5.4.0",
+		"rugk/threema-msgapi-sdk-php": "*"
+    }
+}
