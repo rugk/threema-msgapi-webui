@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "38b83f77516346c652b4ed3dec4f874a",
+    "hash": "44d4da09f7a54d6291794e5bcce55b62",
     "content-hash": "8100bb784dadce5dd1942c817ec8c35d",
     "packages": [
         {
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rugk/threema-msgapi-sdk-php.git",
-                "reference": "c77d16c69f91eabe2cc73e299c4a96f5315e0f80"
+                "reference": "c8875b4806b6778be7dd10a60bdba3567752bddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rugk/threema-msgapi-sdk-php/zipball/c77d16c69f91eabe2cc73e299c4a96f5315e0f80",
-                "reference": "c77d16c69f91eabe2cc73e299c4a96f5315e0f80",
+                "url": "https://api.github.com/repos/rugk/threema-msgapi-sdk-php/zipball/c8875b4806b6778be7dd10a60bdba3567752bddd",
+                "reference": "c8875b4806b6778be7dd10a60bdba3567752bddd",
                 "shasum": ""
             },
             "require": {
@@ -46,6 +46,7 @@
                 },
                 {
                     "name": "rugk",
+                    "email": "rugk@posteo.de",
                     "homepage": "https://github.com/rugk",
                     "role": "Maintainer of GitHub repository"
                 }
@@ -69,7 +70,7 @@
                 "sms gateway",
                 "switzerland"
             ],
-            "time": "2016-01-10 20:07:37"
+            "time": "2016-01-16 23:10:39"
         }
     ],
     "packages-dev": [],
