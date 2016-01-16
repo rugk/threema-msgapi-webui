@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "rugk",
-			"email": "rugk@posteo.de",
+		  	    "email": "rugk@posteo.de",
             "homepage": "https://github.com/rugk",
             "role": "Developer"
         }
@@ -20,6 +20,6 @@
     },
     "require": {
         "php": ">=5.4.0",
-		"rugk/threema-msgapi-sdk-php": "dev-master"
+		    "rugk/threema-msgapi-sdk-php": "dev-master"
     }
 }

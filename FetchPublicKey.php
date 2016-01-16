@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-header('Content-Type: text/plain');
+header('Content-Type: application/json');
 
 //include SDK
 require_once 'include/BootstrapSdk.php';

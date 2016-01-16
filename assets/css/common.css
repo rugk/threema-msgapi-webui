@@ -48,7 +48,7 @@ code {
   padding: 5px;
 }
 
-.filecheckdesc {
+.checkdesc {
   vertical-align: middle;
 }
 
@@ -126,6 +126,10 @@ input[type=text]:invalid {
   min-height: 25px;
   min-width: 100%;
   resize: both;
+}
+
+.smalltext {
+  font-size: 9pt;
 }
 
 /* MOBILE ADJUSTMENTS */

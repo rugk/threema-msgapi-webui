@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author rugk
+ * @copyright Copyright (c) 2015-2016 rugk
+ * @license MIT
+ */
+
 // only shows content when it is not parsed by a PHP interpreter
 if (false):
 ?>
@@ -8,80 +14,54 @@ if (false):
     through PHP to view it correctly. To do this please setup a local server with
     PHP support and access the file like this: <code>http://127.0.0.1/threema-msgapi-sdk-php/samples/web/</code>.
 </div>
+<?php endif ?>
 
 <?php
-endif
-?>
-<?php
-/**
- * @author rugk
- * @copyright Copyright (c) 2015-2016 rugk
- * @license MIT
- */
-
 /* INCLUDES */
 require_once 'include/GlobalConstants.php';
+require_once 'include/UiHelper.php';
 require_once 'include/PublicKey.php';
 require_once 'include/GetPost.php';
+require_once 'include/ErrorCheckCollector.php';
+
+//the config options
+require_once 'config.php';
 
 /* HANDLE SENDING OF MESSAGES */
 $actionDone = null;
-require_once 'SendTextMessage.php';
-
-/* SOME SMALL FUNCTIONS */
-function ShowDefaultReceiverId($addOptionsHtmlCode = false)
-{
-    $isShown = ReturnGetPost('threemaid') != null || ReturnGetPost('recieverid')
-    != null || MSGAPI_DEFAULTRECEIVER <> '';
-
-    // Show previous input if there is something
-    if ($isShown && $addOptionsHtmlCode) {
-        echo '<option value="';
-    }
-
-    if (ReturnGetPost('threemaid') != null) {
-        echo htmlentities(ReturnGetPost('threemaid'));
-    } elseif (ReturnGetPost('recieverid') != null) {
-        echo htmlentities(ReturnGetPost('recieverid'));
-    } elseif (MSGAPI_DEFAULTRECEIVER <> '') {
-        // use receiver in config
-        echo MSGAPI_DEFAULTRECEIVER;
-    }
-
-    if ($isShown && $addOptionsHtmlCode) {
-        echo '">';
-    }
-}
-
-function ShowDefaultMessage()
-{
-    // Show previous input if there is something
-    if (ReturnGetPost('message') != null) {
-        echo htmlentities(ReturnGetPost('message'));
-    }
+if (ReturnGetPost('recieverid')) {
+    require_once 'SendTextMessage.php';
 }
 
 /* CHECK PREREQUISITES */
-$fileConnCredentErr = '';
+$errCol = new ErrorChkColl;
+$sendingCheckSuccessful = true; //later more requirements are added
+
+//file: connection credentials
+$errCol->RegisterGenericMessages('files', 'connCred',
+    '<code>' . FILENAME_CONNCRED . '</code> was correctly created.',
+    '<code>' . FILENAME_CONNCRED . '</code> was not correctly created.'
+);
+
 if (!file_exists(FILENAME_CONNCRED)) {
-    $fileConnCredentErr .= ' The file does not exist.';
+    $errCol->RegisterError('files', 'connCred', 'The file does not exist.');
 } else {
     include_once FILENAME_CONNCRED;
     if (!defined('MSGAPI_GATEWAY_THREEMA_ID') ||
         !defined('MSGAPI_GATEWAY_THREEMA_ID_SECRET')
     ) {
-        $fileConnCredentErr .= ' Not all required constants are defined.';
+        $errCol->RegisterError('files', 'connCred', 'Not all required constants are defined.');
     } else {
         if (MSGAPI_GATEWAY_THREEMA_ID == '' ||
             !preg_match('/' . REGEXP_THREEMAID_GATEWAY . '/', MSGAPI_GATEWAY_THREEMA_ID)
         ) {
-            $fileConnCredentErr .= ' \'MSGAPI_GATEWAY_THREEMA_ID\' is invalid.';
+            $errCol->RegisterError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID\' is invalid.');
         }
 
         if (MSGAPI_GATEWAY_THREEMA_ID_SECRET == '' ||
             !ctype_alnum(MSGAPI_GATEWAY_THREEMA_ID_SECRET)
         ) {
-            $fileConnCredentErr .= ' \'MSGAPI_GATEWAY_THREEMA_ID_SECRET\' is invalid.';
+            $errCol->RegisterError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID_SECRET\' is invalid.');
         }
 
         // MSGAPI_DEFAULTRECEIVER is optional
@@ -97,22 +77,55 @@ if (!file_exists(FILENAME_CONNCRED)) {
     }
 }
 
+//file: private key
+$errCol->RegisterGenericMessages('files', 'privKey',
+    '<code>' . FILENAME_PRIVKEY . '</code> was correctly created.',
+    '<code>' . FILENAME_PRIVKEY . '</code> was not correctly created.'
+);
 
-$fileChkPrivateKeyErr = '';
 if (!file_exists(FILENAME_PRIVKEY)) {
-    $fileChkPrivateKeyErr .= ' The file does not exist.';
+    $errCol->RegisterError('files', 'privKey', 'The file does not exist.');
 } else {
     include_once FILENAME_PRIVKEY;
     if (!defined('MSGAPI_PRIVATE_KEY')) {
-        $fileChkPrivateKeyErr .= ' Not all constants are defined.';
+        $errCol->RegisterError('files', 'privKey', 'Not all constants are defined.');
     } else {
         if (MSGAPI_PRIVATE_KEY == '' ||
             !KeyCheck(MSGAPI_PRIVATE_KEY, 'private:')
         ) {
-            $fileChkPrivateKeyErr .= ' \'MSGAPI_PRIVATE_KEY\' is invalid.';
+            $errCol->RegisterError('files', 'privKey', '\'MSGAPI_PRIVATE_KEY\' is invalid.');
         }
     }
 }
+
+//libsodium: private key
+$errCol->RegisterGenericMessages('libsodium', 'state',
+    'Libsodium is loaded.',
+    'Libsodium is not loaded.'
+);
+$errCol->RegisterGenericMessages('libsodium', 'version',
+    'You use a recent version of libsodium.',
+    'You use an old outdated version of libsodium. It is very much recommend to update it.'
+);
+
+if (extension_loaded('libsodium')) {
+    $errCol->RegisterSuccess('libsodium', 'state');
+
+    if (method_exists('Sodium', 'sodium_version_string')) {
+        $errCol->RegisterWarning('libsodium', 'version', 'Sodium version: ' . Sodium::sodium_version_string());
+    } else {
+        $errCol->RegisterSuccess('libsodium', 'version', 'Sodium version: ' . \Sodium\version_string());
+    }
+} else {
+    $errCol->RegisterWarning('libsodium', 'state', 'It is very much recommend to install and load it.');
+    if (PHP_INT_SIZE < 8) {
+        $errCol->RegisterError('libsodium', '64bit', 'To use the SDK without libsodium you have to use a 64bit version of PHP.');
+    }
+}
+
+//evaluate checks and prepare for an output of the results
+$fileCheckResults = $errCol->EvaluateChecks('files');
+$libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
 ?>
 
 <!DOCTYPE html>
@@ -129,69 +142,61 @@ if (!file_exists(FILENAME_PRIVKEY)) {
             This is a development UI for the <a href="https://github.com/rugk/threema-msgapi-sdk-php" title="Threema Gateway PHP SDK">Threema MSGAPI PHP-SDK</a>.
             Here you can test the PHP message SDK.
         </p>
-        <h2 id="prerequisites">Prerequisites</h2>
-        <?php if ($fileConnCredentErr == '' && $fileChkPrivateKeyErr == ''): ?>
-            <!-- files already exist - no need to show instructions -->
-        <?php else: ?>
-        <p>
-            Before you can use this test you have to get credentials at <a href="https://gateway.threema.ch" title="Threema Gateway">gateway.threema.ch</a> and <a href="https://github.com/rugk/threema-msgapi-sdk-php/wiki/How-to-generate-a-new-key-pair-and-send-a-message">create a key pair</a>. After you did so, you have to open <code><?php echo FILENAME_CONNCRED . FILEEXT_EXAMPLE ?></code> and <code><?php echo FILENAME_PRIVKEY . FILEEXT_EXAMPLE ?></code> and add your credentials and private key. Save them without the <code><?php echo FILEEXT_EXAMPLE ?></code> file extension afterwards.
-            By default these files are excluded from git pulls so you will not accidentally publish these sensitive files.
-        </p>
+
+        <?php if ($fileCheckResults['error'] || DISPLSUCC_PREREQ): ?>
+            <h2 id="prerequisites">Prerequisites</h2>
+            <?php if ($fileCheckResults['error']): ?>
+                <p>
+                    Before you can use this test you have to get credentials at <a href="https://gateway.threema.ch" title="Threema Gateway">gateway.threema.ch</a> and <a href="https://github.com/rugk/threema-msgapi-sdk-php/wiki/How-to-generate-a-new-key-pair-and-send-a-message">create a key pair</a>. After you did so, you have to open <code><?php echo FILENAME_CONNCRED . FILEEXT_EXAMPLE ?></code> and <code><?php echo FILENAME_PRIVKEY . FILEEXT_EXAMPLE ?></code> and add your credentials and private key. Save them without the <code><?php echo FILEEXT_EXAMPLE ?></code> file extension afterwards.
+                    By default these files are excluded from git pulls so you will not accidentally publish these sensitive files.
+                </p>
+            <?php endif ?>
+
+            <!-- Show graphical indicator -->
+            <div class="checkcontainer">
+                <?php
+                $errCol->ShowErrors($fileCheckResults, DISPLSUCC_PREREQ);
+                ?>
+            </div>
         <?php endif ?>
 
-        <!-- Show graphical indicator -->
-        <div class="graphprepcheck">
-            <?php if ($fileConnCredentErr == ''): ?>
-            <div class="filecheck">
-                <img class="graphicon" src="assets/img/tick.svg" alt="tick" />
-                <span class="filecheckdesc">
-                    <code><?php echo FILENAME_CONNCRED ?></code> was correctly created.
-                </span>
+		<h2 id="debug">Debug</h2>
+        <?php if ($libsodiumCheckResults['error'] || DISPLSUCC_DEBUG): ?>
+            <div class="checkcontainer">
+                <?php
+                $errCol->ShowErrors($libsodiumCheckResults, DISPLSUCC_PREREQ);
+                ?>
             </div>
-            <?php else: ?>
-            <div class="filecheck">
-                <img class="graphicon" src="assets/img/cross.svg" alt="tick" />
-                <span class="filecheckdesc">
-                    <code><?php echo FILENAME_CONNCRED ?></code> was not correctly created.<?php echo $fileConnCredentErr ?>
-                </span>
-            </div>
-            <?php endif ?>
-
-            <?php if ($fileChkPrivateKeyErr == ''): ?>
-            <div class="filecheck">
-                <img class="graphicon" src="assets/img/tick.svg" alt="tick" />
-                <span class="filecheckdesc">
-                    <code><?php echo FILENAME_PRIVKEY ?></code> was correctly created.
-                </span>
-            </div>
-            <?php else: ?>
-            <div class="filecheck">
-                <img class="graphicon" src="assets/img/cross.svg" alt="tick" />
-                <span class="filecheckdesc">
-                    <code><?php echo FILENAME_PRIVKEY ?></code> was not correctly created.<?php echo $fileChkPrivateKeyErr ?>
-                </span>
-            </div>
-            <?php endif ?>
+        <?php else: ?>
+            <span>
+                Sodium version: <?php ShowLibsodiumVersion(); ?>
+            </span>
+        <?php endif ?>
+        <div class="smalltext">
+            <a href="debug" target="_blank">More debugging scripts</a>
         </div>
 
         <!-- Sending UI -->
         <h2 id="test">Test</h2>
-        <?php if ($actionDone == true): ?>
-            <?php if ($errorMessage == null): ?>
-                <div class="success">
-                    Message successfully sent to <?php echo $threemaId ?>. Message ID: <?php echo $messageId ?>.
-                </div>
-            <?php else: ?>
-                <div class="error">
-                    Sending message to <?php echo $threemaId ?> failed. Error: <?php echo $errorMessage ?>.
-                </div>
-            <?php endif ?>
-        <?php endif ?>
-        <?php if ($fileConnCredentErr <> '' || $fileChkPrivateKeyErr <> ''): ?>
+        <?php if ($errCol->IsBreakpoint($fileCheckResults) || $errCol->IsBreakpoint($libsodiumCheckResults)): ?>
+            <!-- error in checks before -->
             <div class="warning">
                 You did not prepared your setup correctly to use the test. Please follow the intructions above to setup your environment.
             </div>
         <?php else: ?>
+            <!-- checks successful -->
+            <?php if ($actionDone == true): //pending messages from action must be shown ?>
+                <?php if ($errorMessage == null): ?>
+                    <div class="success">
+                        Message successfully sent to <?php echo $threemaId ?>. Message ID: <?php echo $messageId ?>.
+                    </div>
+                <?php else: ?>
+                    <div class="error">
+                        Sending message to <?php echo $threemaId ?> failed. Error: <?php echo $errorMessage ?>.
+                    </div>
+                <?php endif ?>
+            <?php endif ?>
+
             <form id="mainform" action="." method="<?php echo $_SERVER['REQUEST_METHOD']; ?>">
                 <div class="formcontainer">
                     <fieldset id="field_generalsettings">
@@ -230,13 +235,13 @@ if (!file_exists(FILENAME_PRIVKEY)) {
                             <label for="ButtonExternalScript" title="Use a separate page (in a new tab) instead of the index.php for submitting this request">Use own script</label>
                     </fieldset>
                 </div>
-            <input type="submit" value="Send" title="Submit request and send message">
-        </form>
+                <input type="submit" value="Send" title="Submit request and send message">
+            </form>
 
-        <!-- Put JS at the end so it is executed when the DOM is loaded completly -->
-        <script src="assets/js/binhex.js" charset="utf-8"></script>
-        <script src="assets/js/pubkeyfetch.js" charset="utf-8"></script>
-        <script src="assets/js/methodswitcher.js" charset="utf-8"></script>
+            <!-- Put JS at the end so it is executed when the DOM is loaded completly -->
+            <script src="assets/js/binhex.js" charset="utf-8"></script>
+            <script src="assets/js/pubkeyfetch.js" charset="utf-8"></script>
+            <script src="assets/js/methodswitcher.js" charset="utf-8"></script>
         <?php endif ?>
     </body>
 </html>

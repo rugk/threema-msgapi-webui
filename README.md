@@ -4,6 +4,9 @@ This is a sample webui, which uses the [Threema Gateway PHP-SDK](https://github.
 
 **Important:** This is only an example and it is mostly only intended as a development tool. Do not use it on productive systems unless you know what you are doing!
 
+## Screenshot
+![ThreemaDevUIScreenshot](assets/screenshots/ThreemaDevUIScreenshot.png)
+
 ## Requirements
 
 You must use at least PHP 5.4 and it is strongly recommend to install libsodium. For more information, please have a look at the [installation instructions](https://github.com/rugk/threema-msgapi-sdk-php#installation) of the PHP SDK.
