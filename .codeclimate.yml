@@ -21,7 +21,7 @@ engines:
       Squiz WhiteSpace ScopeClosingBrace ContentBefore:
         enabled: false
       ControlStructures ControlSignature SpaceAfterKeyword:
-        enabloed: false
+        enabled: false
   phpmd:
     enabled: true
     checks:
