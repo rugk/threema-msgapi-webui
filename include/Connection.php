@@ -32,7 +32,7 @@ function CreateConnection($keystorePath = __DIR__ . '/../keystore.php', $useTlsO
  *
  * @param string $keystorePath Path public key store file (PHP)
  *
- * @return PhpFile public key store
+ * @return Threema\MsgApi\PublicKeyStores\PhpFile public key store
  */
 function CreatePublicKeyStore($keystorePath)
 {
