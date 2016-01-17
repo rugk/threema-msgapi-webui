@@ -20,7 +20,7 @@ engines:
         enabled: false
       Squiz WhiteSpace ScopeClosingBrace ContentBefore:
         enabled: false
-      Squiz ControlStructures ControlSignature SpaceAfterKeyword:
+      ControlStructures ControlSignature SpaceAfterKeyword:
         enabloed: false
   phpmd:
     enabled: true
