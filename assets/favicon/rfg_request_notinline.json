@@ -1,0 +1,35 @@
+{"favicon_generation": {
+    "api_key": "[TODO: Copy your API key here]",
+    "master_picture": {
+      "type": "url",
+	  "content": "",
+    },
+    "favicon_design": {
+      "ios": {"picture_aspect": "no_change"},
+      "desktop_browser": {},
+      "windows": {
+        "picture_aspect": "no_change",
+        "background_color": "#323232",
+        "on_conflict": "override"
+      },
+      "android_chrome": {
+        "picture_aspect": "no_change",
+        "theme_color": "#323232",
+        "manifest": {
+          "name": "Threema MSGAPI WebUI",
+          "display": "browser",
+          "orientation": "not_set",
+          "on_conflict": "override"
+        }
+      },
+      "safari_pinned_tab": {
+        "picture_aspect": "black_and_white",
+        "threshold": 50,
+        "theme_color": "#323232"
+      }
+    },
+    "settings": {
+      "scaling_algorithm": "Mitchell",
+      "error_on_image_too_small": false
+    }
+  }}
