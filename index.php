@@ -226,13 +226,15 @@ $libsodiumCheckResults = $errCol->evaluateChecks('libsodium', false);
                     </fieldset>
                     <fieldset id="field_method">
                         <legend>Method</legend>
-                        <input id="SrvMethodGet" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                                echo 'checked="checked"';
-                            } ?> value="get">
+                        <input id="SrvMethodGet" name="servermethod" type="radio" <?php
+                        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                            echo 'checked="checked"';
+                        } ?> value="get">
                             <label for="SrvMethodGet" title="Use the GET method for sending the request to the (local) server">GET</label>
-                        <input id="SrvMethodPost" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                                echo 'checked="checked"';
-                            } ?> value="post">
+                        <input id="SrvMethodPost" name="servermethod" type="radio" <?php
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            echo 'checked="checked"';
+                        } ?> value="post">
                             <label for="SrvMethodPost" title="Use the POST method for sending the request to the (local) server">POST</label>
                         <br />
                         <input id="ButtonExternalScript" name="isExternal" type="checkbox">

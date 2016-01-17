@@ -2,7 +2,7 @@
     "api_key": "[TODO: Copy your API key here]",
     "master_picture": {
       "type": "url",
-	  "content": "",
+	  "content": "https://raw.githubusercontent.com/rugk/threema-msgapi-webui/master/assets/favicon/favicon.svg",
     },
     "favicon_design": {
       "ios": {"picture_aspect": "no_change"},
