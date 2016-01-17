@@ -206,8 +206,8 @@ class ErrorChkColl
                 echo '<img class="graphicon" src="' . self::ERR_ERROR_PIC . '" alt="error" />' . PHP_EOL;
                 echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;
                 break;
+		}
         echo '</div>';
-        }
     }
 
     private function valueOrEmpty($array, $key)

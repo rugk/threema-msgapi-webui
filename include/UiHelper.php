@@ -7,7 +7,7 @@
 
 function ShowDefaultReceiverId($addOptionsHtmlCode = false)
 {
-    $isShown = ReturnGetPost('threemaid') != null || ReturnGetPost('recieverid')
+    $isShown = ReturnGetPost('threemaid') !== null || ReturnGetPost('recieverid')
     != null || MSGAPI_DEFAULTRECEIVER != '';
 
     // Show previous input if there is something
@@ -15,9 +15,9 @@ function ShowDefaultReceiverId($addOptionsHtmlCode = false)
         echo '<option value="';
     }
 
-    if (ReturnGetPost('threemaid') != null) {
+    if (ReturnGetPost('threemaid') !== null) {
         echo htmlentities(ReturnGetPost('threemaid'));
-    } elseif (ReturnGetPost('recieverid') != null) {
+    } elseif (ReturnGetPost('recieverid') !== null) {
         echo htmlentities(ReturnGetPost('recieverid'));
     } elseif (MSGAPI_DEFAULTRECEIVER != '') {
         // use receiver in config
@@ -32,7 +32,7 @@ function ShowDefaultReceiverId($addOptionsHtmlCode = false)
 function ShowDefaultMessage()
 {
     // Show previous input if there is something
-    if (ReturnGetPost('message') != null) {
+    if (ReturnGetPost('message') !== null) {
         echo htmlentities(ReturnGetPost('message'));
     }
 }

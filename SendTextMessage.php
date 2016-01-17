@@ -59,7 +59,7 @@ if (ReturnGetPost('recieverid') &&
 $connector = CreateConnection();
 
 //Send message
-if ($threemaId != null && $message != null) {
+if ($threemaId !== null && $message !== null) {
     if (!$isIncluded) {
         header('Content-Type: text/plain');
     }
@@ -75,7 +75,7 @@ if ($threemaId != null && $message != null) {
 
 //Show direct output if the file is called directly
 if (!$isIncluded) {
-    if ($errorMessage == null) {
+    if ($errorMessage === null) {
         echo 'Message ID: ' . $messageId;
     } else {
         echo $errorMessage;

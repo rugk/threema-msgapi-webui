@@ -29,7 +29,7 @@ require_once 'include/GetPost.php';
  *
  * @return string|Exception
  */
-function FetchPublicKey($connector, $threemaId)
+function FetchPublicKey(Connection $connector, $threemaId)
 {
     $result = $connector->fetchPublicKey($threemaId);
     if ($result->isSuccess()) {
@@ -51,7 +51,7 @@ if (ReturnGetPost('threemaid') &&
 $connector = CreateConnection();
 
 //fetch public key and return a 500 error in case of a failure
-if ($threemaId != null) {
+if ($threemaId !== null) {
     try {
         //success: return all variants of the key as a JSON
         $publicKey['long']             = FetchPublicKey($connector, $threemaId);

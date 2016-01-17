@@ -53,7 +53,7 @@ function CreatePublicKeyStore($keystorePath)
  */
 function CreateConnectionSettings($useTlsOptions)
 {
-    if ($useTlsOptions == true) {
+    if ($useTlsOptions === true) {
         //create a connection with advanced options
         $settings = new ConnectionSettings(
             MSGAPI_GATEWAY_THREEMA_ID,

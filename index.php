@@ -38,30 +38,30 @@ $errCol                 = new ErrorChkColl;
 $sendingCheckSuccessful = true; //later more requirements are added
 
 //file: connection credentials
-$errCol->RegisterGenericMessages('files', 'connCred',
+$errCol->registerGenericMessages('files', 'connCred',
     '<code>' . FILENAME_CONNCRED . '</code> was correctly created.',
     '<code>' . FILENAME_CONNCRED . '</code> was not correctly created.'
 );
 
 if (!file_exists(FILENAME_CONNCRED)) {
-    $errCol->RegisterError('files', 'connCred', 'The file does not exist.');
+    $errCol->registerError('files', 'connCred', 'The file does not exist.');
 } else {
     include_once FILENAME_CONNCRED;
     if (!defined('MSGAPI_GATEWAY_THREEMA_ID') ||
         !defined('MSGAPI_GATEWAY_THREEMA_ID_SECRET')
     ) {
-        $errCol->RegisterError('files', 'connCred', 'Not all required constants are defined.');
+        $errCol->registerError('files', 'connCred', 'Not all required constants are defined.');
     } else {
         if (MSGAPI_GATEWAY_THREEMA_ID == '' ||
             !preg_match('/' . REGEXP_THREEMAID_GATEWAY . '/', MSGAPI_GATEWAY_THREEMA_ID)
         ) {
-            $errCol->RegisterError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID\' is invalid.');
+            $errCol->registerError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID\' is invalid.');
         }
 
         if (MSGAPI_GATEWAY_THREEMA_ID_SECRET == '' ||
             !ctype_alnum(MSGAPI_GATEWAY_THREEMA_ID_SECRET)
         ) {
-            $errCol->RegisterError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID_SECRET\' is invalid.');
+            $errCol->registerError('files', 'connCred', '\'MSGAPI_GATEWAY_THREEMA_ID_SECRET\' is invalid.');
         }
 
         // MSGAPI_DEFAULTRECEIVER is optional
@@ -78,54 +78,54 @@ if (!file_exists(FILENAME_CONNCRED)) {
 }
 
 //file: private key
-$errCol->RegisterGenericMessages('files', 'privKey',
+$errCol->registerGenericMessages('files', 'privKey',
     '<code>' . FILENAME_PRIVKEY . '</code> was correctly created.',
     '<code>' . FILENAME_PRIVKEY . '</code> was not correctly created.'
 );
 
 if (!file_exists(FILENAME_PRIVKEY)) {
-    $errCol->RegisterError('files', 'privKey', 'The file does not exist.');
+    $errCol->registerError('files', 'privKey', 'The file does not exist.');
 } else {
     include_once FILENAME_PRIVKEY;
     if (!defined('MSGAPI_PRIVATE_KEY')) {
-        $errCol->RegisterError('files', 'privKey', 'Not all constants are defined.');
+        $errCol->registerError('files', 'privKey', 'Not all constants are defined.');
     } else {
         if (MSGAPI_PRIVATE_KEY == '' ||
             !KeyCheck(MSGAPI_PRIVATE_KEY, 'private:')
         ) {
-            $errCol->RegisterError('files', 'privKey', '\'MSGAPI_PRIVATE_KEY\' is invalid.');
+            $errCol->registerError('files', 'privKey', '\'MSGAPI_PRIVATE_KEY\' is invalid.');
         }
     }
 }
 
 //libsodium: private key
-$errCol->RegisterGenericMessages('libsodium', 'state',
+$errCol->registerGenericMessages('libsodium', 'state',
     'Libsodium is loaded.',
     'Libsodium is not loaded.'
 );
-$errCol->RegisterGenericMessages('libsodium', 'version',
+$errCol->registerGenericMessages('libsodium', 'version',
     'You use a recent version of libsodium.',
     'You use an old outdated version of libsodium. It is very much recommend to update it.'
 );
 
 if (extension_loaded('libsodium')) {
-    $errCol->RegisterSuccess('libsodium', 'state');
+    $errCol->registerSuccess('libsodium', 'state');
 
     if (method_exists('Sodium', 'sodium_version_string')) {
-        $errCol->RegisterWarning('libsodium', 'version', 'Sodium version: ' . Sodium::sodium_version_string());
+        $errCol->registerWarning('libsodium', 'version', 'Sodium version: ' . Sodium::sodium_version_string());
     } else {
-        $errCol->RegisterSuccess('libsodium', 'version', 'Sodium version: ' . \Sodium\version_string());
+        $errCol->registerSuccess('libsodium', 'version', 'Sodium version: ' . \Sodium\version_string());
     }
 } else {
-    $errCol->RegisterWarning('libsodium', 'state', 'It is very much recommend to install and load it.');
+    $errCol->registerWarning('libsodium', 'state', 'It is very much recommend to install and load it.');
     if (PHP_INT_SIZE < 8) {
-        $errCol->RegisterError('libsodium', '64bit', 'To use the SDK without libsodium you have to use a 64bit version of PHP.');
+        $errCol->registerError('libsodium', '64bit', 'To use the SDK without libsodium you have to use a 64bit version of PHP.');
     }
 }
 
 //evaluate checks and prepare for an output of the results
-$fileCheckResults      = $errCol->EvaluateChecks('files');
-$libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
+$fileCheckResults      = $errCol->evaluateChecks('files');
+$libsodiumCheckResults = $errCol->evaluateChecks('libsodium', false);
 ?>
 
 <!DOCTYPE html>
@@ -155,7 +155,7 @@ $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
             <!-- Show graphical indicator -->
             <div class="checkcontainer">
                 <?php
-                $errCol->ShowErrors($fileCheckResults, DISPLSUCC_PREREQ);
+                $errCol->showErrors($fileCheckResults, DISPLSUCC_PREREQ);
                 ?>
             </div>
         <?php endif ?>
@@ -164,7 +164,7 @@ $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
         <?php if ($libsodiumCheckResults['error'] || DISPLSUCC_DEBUG): ?>
             <div class="checkcontainer">
                 <?php
-                $errCol->ShowErrors($libsodiumCheckResults, DISPLSUCC_PREREQ);
+                $errCol->showErrors($libsodiumCheckResults, DISPLSUCC_PREREQ);
                 ?>
             </div>
         <?php else: ?>
@@ -178,15 +178,15 @@ $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
 
         <!-- Sending UI -->
         <h2 id="test">Test</h2>
-        <?php if ($errCol->IsBreakpoint($fileCheckResults) || $errCol->IsBreakpoint($libsodiumCheckResults)): ?>
+        <?php if ($errCol->isBreakpoint($fileCheckResults) || $errCol->isBreakpoint($libsodiumCheckResults)): ?>
             <!-- error in checks before -->
             <div class="warning">
                 You did not prepared your setup correctly to use the test. Please follow the intructions above to setup your environment.
             </div>
         <?php else: ?>
             <!-- checks successful -->
-            <?php if ($actionDone == true): //pending messages from action must be shown ?>
-                <?php if ($errorMessage == null): ?>
+            <?php if ($actionDone === true): //pending messages from action must be shown ?>
+                <?php if ($errorMessage === null): ?>
                     <div class="success">
                         Message successfully sent to <?php echo $threemaId ?>. Message ID: <?php echo $messageId ?>.
                     </div>
@@ -227,12 +227,12 @@ $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
                     <fieldset id="field_method">
                         <legend>Method</legend>
                         <input id="SrvMethodGet" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    echo 'checked="checked"';
-} ?> value="get">
+                                echo 'checked="checked"';
+                            } ?> value="get">
                             <label for="SrvMethodGet" title="Use the GET method for sending the request to the (local) server">GET</label>
                         <input id="SrvMethodPost" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo 'checked="checked"';
-} ?> value="post">
+                                echo 'checked="checked"';
+                            } ?> value="post">
                             <label for="SrvMethodPost" title="Use the POST method for sending the request to the (local) server">POST</label>
                         <br />
                         <input id="ButtonExternalScript" name="isExternal" type="checkbox">
