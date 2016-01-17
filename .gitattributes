@@ -3,3 +3,4 @@
 
 # image files should not be touched
 *.png binary
+*.ico binary
