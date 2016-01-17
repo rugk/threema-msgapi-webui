@@ -7,8 +7,8 @@
 
 // set end of line
 $eol = PHP_EOL;
-if (php_sapi_name() != "cli") {
-    $eol .= "<br>";
+if (php_sapi_name() != 'cli') {
+    $eol .= '<br>';
 }
 
 //list all functions

@@ -2,12 +2,15 @@ engines:
   csslint:
     enabled: true
     exclude_fingerprints:
-    - a907208b7f93e6c071e5cc5e32a24b8a #ignore 0px for margin-bottom on h tags
+    - 61f883d4595213cf22a4027e8fa0686b #ignore 0px for margin-bottom on h tags
+    - 61f883d4595213cf22a4027e8fa0686b #ignore 0px for padding 0px (responsive)
     checks:
       shorthand:
         enabled: false
       fallback-colors:
         enabled: false
+      box-sizing:
+        enabled: false #who cares about compatibility with IE 6/7?
   fixme:
     enabled: true
   phpcodesniffer:
@@ -17,6 +20,8 @@ engines:
         enabled: false
       Squiz WhiteSpace ScopeClosingBrace ContentBefore:
         enabled: false
+      Squiz ControlStructures ControlSignature SpaceAfterKeyword:
+        enabloed: false
   phpmd:
     enabled: true
     checks:

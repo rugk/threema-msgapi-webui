@@ -9,7 +9,7 @@ use Threema\MsgApi\Connection;
 use Threema\MsgApi\ConnectionSettings;
 
 /**
- * Creates a connection
+ * Creates a connection.
  *
  * Automatically calls CreateConnectionSettings and InitiateConnection.
  *
@@ -28,7 +28,7 @@ function CreateConnection($keystorePath = __DIR__ . '/../keystore.php', $useTlsO
 }
 
 /**
- * Createa a PHP public key store
+ * Createa a PHP public key store.
  *
  * @param string $keystorePath Path public key store file (PHP)
  *
@@ -38,14 +38,14 @@ function CreatePublicKeyStore($keystorePath)
 {
     if (!file_exists($keystorePath)) {
         if (!touch($keystorePath)) {
-            throw new Exception("PHP keystore could not be created.");
+            throw new Exception('PHP keystore could not be created.');
         }
     }
     return new Threema\MsgApi\PublicKeyStores\PhpFile($keystorePath);
 }
 
 /**
- * Creates connection settings
+ * Creates connection settings.
  *
  * @param bool $useTlsOptions whether to use advanced options or not
  *
@@ -77,7 +77,7 @@ function CreateConnectionSettings($useTlsOptions)
 }
 
 /**
- * Initiates (starts) connection settings
+ * Initiates (starts) connection settings.
  *
  * @param string $settings       settings got by CreateConnectionSettings
  * @param bool   $publicKeyStore file for PHP public key store

@@ -21,7 +21,7 @@ class ErrorChkColl
     const ERR_ERROR_PIC   = 'assets/img/cross.svg';
 
     /**
-     * Saves all the infromation about the error checks
+     * Saves all the infromation about the error checks.
      *
      * format:
      *  - a group ($groupIdentifier)
@@ -34,18 +34,18 @@ class ErrorChkColl
      */
     private $checkedErrors = [];
 
-    public function DebugDumpArray()
+    public function debugDumpArray()
     {
         var_dump($this->checkedErrors);
     }
 
-    public function RegisterGenericMessages($groupIdentifier, $checkIdentifier, $successMsg, $errorMsg = '')
+    public function registerGenericMessages($groupIdentifier, $checkIdentifier, $successMsg, $errorMsg = '')
     {
         $this->checkedErrors[$groupIdentifier][$checkIdentifier]['successMsg'] = $successMsg;
         $this->checkedErrors[$groupIdentifier][$checkIdentifier]['errorMsg']   = $errorMsg;
     }
 
-    public function RegisterResult($groupIdentifier, $checkIdentifier, $result, $errorType, $errorMsg)
+    public function registerResult($groupIdentifier, $checkIdentifier, $result, $errorType, $errorMsg)
     {
         if ($result) {
             // if there is no error force error state to be ERR_NONE
@@ -58,19 +58,19 @@ class ErrorChkColl
         ];
     }
 
-    public function RegisterSuccess($groupIdentifier, $checkIdentifier, $errorMsg = '')
+    public function registerSuccess($groupIdentifier, $checkIdentifier, $errorMsg = '')
     {
-        return $this->RegisterResult($groupIdentifier, $checkIdentifier, true, self::ERR_NONE, $errorMsg);
+        return $this->registerResult($groupIdentifier, $checkIdentifier, true, self::ERR_NONE, $errorMsg);
     }
 
-    public function RegisterWarning($groupIdentifier, $checkIdentifier, $errorMsg = '')
+    public function registerWarning($groupIdentifier, $checkIdentifier, $errorMsg = '')
     {
-        return $this->RegisterResult($groupIdentifier, $checkIdentifier, false, self::ERR_WARNING, $errorMsg);
+        return $this->registerResult($groupIdentifier, $checkIdentifier, false, self::ERR_WARNING, $errorMsg);
     }
 
-    public function RegisterError($groupIdentifier, $checkIdentifier, $errorMsg  = '')
+    public function registerError($groupIdentifier, $checkIdentifier, $errorMsg = '')
     {
-        return $this->RegisterResult($groupIdentifier, $checkIdentifier, false, self::ERR_ERROR, $errorMsg);
+        return $this->registerResult($groupIdentifier, $checkIdentifier, false, self::ERR_ERROR, $errorMsg);
     }
 
     /**
@@ -81,7 +81,7 @@ class ErrorChkColl
      *                                 if disabled these checks are ignored.
      * @return array
      */
-    public function EvaluateChecks($groupIdentifier, $autoSuccess = true)
+    public function evaluateChecks($groupIdentifier, $autoSuccess = true)
     {
         $resultArray     = [];
         $groupWorstError = 0;
@@ -91,7 +91,7 @@ class ErrorChkColl
             foreach ($this->checkedErrors[$groupIdentifier] as $checkIdentifier => $checkContent) {
                 //automatically register success if there is no error registered
                 if (!array_key_exists('errors', $checkContent)) {
-                    $this->RegisterSuccess($groupIdentifier, $checkIdentifier);
+                    $this->registerSuccess($groupIdentifier, $checkIdentifier);
                 }
             }
         }
@@ -139,12 +139,12 @@ class ErrorChkColl
             if ($errorTypeCollect == 0) {
                 //no error
                 $resultArray[$checkIdentifier]['error']          = self::ERR_NONE;
-                $resultArray[$checkIdentifier]['genericMessage'] = $this->ValueOrEmpty($checkContent, "successMsg");
+                $resultArray[$checkIdentifier]['genericMessage'] = $this->valueOrEmpty($checkContent, 'successMsg');
                 $resultArray[$checkIdentifier]['message']        = $successMsgCollect;
             } else {
                 //there is an error
                 $resultArray[$checkIdentifier]['error']          = $errorTypeCollect;
-                $resultArray[$checkIdentifier]['genericMessage'] = $this->ValueOrEmpty($checkContent, "errorMsg");
+                $resultArray[$checkIdentifier]['genericMessage'] = $this->valueOrEmpty($checkContent, 'errorMsg');
                 $resultArray[$checkIdentifier]['message']        = $errorMsgCollect;
             }
         }
@@ -157,10 +157,10 @@ class ErrorChkColl
     /**
      * Returns an array with all checks and errors of a specific group.
      *
-     * @param  array $evaluatedArray An evaluate array returned by EvaluateChecks.
+     * @param  array $evaluatedArray An evaluate array returned by evaluateChecks.
      * @return void
      */
-    public function ShowErrors($evaluatedArray, $showSuccess = true)
+    public function showErrors($evaluatedArray, $showSuccess = true)
     {
         // go through every error and write it
         foreach ($evaluatedArray as $check) {
@@ -169,7 +169,7 @@ class ErrorChkColl
                 continue;
             }
             if ($check['error'] || $showSuccess) {
-                $this->ErrorWrite($check['error'], $check['genericMessage'], $check['message']);
+                $this->errorWrite($check['error'], $check['genericMessage'], $check['message']);
             }
         }
     }
@@ -177,15 +177,15 @@ class ErrorChkColl
     /**
      * Returns true if there is a stopping error in the evaluation.
      *
-     * @param  array $evaluatedArray An evaluate array returned by EvaluateChecks.
+     * @param  array $evaluatedArray An evaluate array returned by evaluateChecks.
      * @return bool
      */
-    public function IsBreakpoint($evaluatedArray)
+    public function isBreakpoint($evaluatedArray)
     {
         return ($evaluatedArray['error'] >= self::ERR_ERROR);
     }
 
-    private function ErrorWrite($errorType, $genericMsg, $message)
+    private function errorWrite($errorType, $genericMsg, $message)
     {
         //Combine messages
         $fullMsg = $genericMsg;
@@ -215,7 +215,7 @@ class ErrorChkColl
         }
     }
 
-    private function ValueOrEmpty($array, $key)
+    private function valueOrEmpty($array, $key)
     {
         if (array_key_exists($key, $array)) {
             return $array[$key];

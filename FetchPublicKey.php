@@ -22,7 +22,7 @@ require_once 'include/PublicKey.php';
 require_once 'include/GetPost.php';
 
 /**
- * Fetches the public key of an ID from the Threema server
+ * Fetches the public key of an ID from the Threema server.
  *
  * @param Connection $connector connector
  * @param string     $threemaId The id whose public key should be fetched
