@@ -21,4 +21,3 @@ if (method_exists('Sodium', 'sodium_version_string')) {
     echo 'you use a recent version of libsodium<br/>';
     echo 'Sodium version: ' . \Sodium\version_string();
 }
-?>

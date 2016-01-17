@@ -25,7 +25,7 @@ require_once 'include/GetPost.php';
  * Fetches the public key of an ID from the Threema server
  *
  * @param Connection $connector connector
- * @param string $threemaId The id whose public key should be fetched
+ * @param string     $threemaId The id whose public key should be fetched
  *
  * @return string|Exception
  */
@@ -33,9 +33,9 @@ function FetchPublicKey($connector, $threemaId)
 {
     $result = $connector->fetchPublicKey($threemaId);
     if ($result->isSuccess()) {
-    	return $result->getPublicKey();
+        return $result->getPublicKey();
     } else {
-    	throw new Exception($result->getErrorMessage());
+        throw new Exception($result->getErrorMessage());
     }
 }
 
@@ -54,7 +54,7 @@ $connector = CreateConnection();
 if ($threemaId != null) {
     try {
         //success: return all variants of the key as a JSON
-        $publicKey['long'] = FetchPublicKey($connector, $threemaId);
+        $publicKey['long']             = FetchPublicKey($connector, $threemaId);
         $publicKey['shortuserdisplay'] = KeyGetUserDisplay($publicKey['long']);
         echo json_encode($publicKey);
     } catch (Exception $e) {

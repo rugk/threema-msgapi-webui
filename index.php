@@ -34,7 +34,7 @@ if (ReturnGetPost('recieverid')) {
 }
 
 /* CHECK PREREQUISITES */
-$errCol = new ErrorChkColl;
+$errCol                 = new ErrorChkColl;
 $sendingCheckSuccessful = true; //later more requirements are added
 
 //file: connection credentials
@@ -69,7 +69,7 @@ if (!file_exists(FILENAME_CONNCRED)) {
             define('MSGAPI_DEFAULTRECEIVER', '');
         }
 
-        if (MSGAPI_DEFAULTRECEIVER <> '' &&
+        if (MSGAPI_DEFAULTRECEIVER != '' &&
             !preg_match('/' . REGEXP_THREEMAID_ANY . '/', MSGAPI_DEFAULTRECEIVER)
         ) {
             $fileConnCredentErr .= ' \'MSGAPI_DEFAULTRECEIVER\' is invalid.';
@@ -124,7 +124,7 @@ if (extension_loaded('libsodium')) {
 }
 
 //evaluate checks and prepare for an output of the results
-$fileCheckResults = $errCol->EvaluateChecks('files');
+$fileCheckResults      = $errCol->EvaluateChecks('files');
 $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
 ?>
 
@@ -226,9 +226,13 @@ $libsodiumCheckResults = $errCol->EvaluateChecks('libsodium', false);
                     </fieldset>
                     <fieldset id="field_method">
                         <legend>Method</legend>
-                        <input id="SrvMethodGet" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'GET') {echo 'checked="checked"';}?> value="get">
+                        <input id="SrvMethodGet" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    echo 'checked="checked"';
+} ?> value="get">
                             <label for="SrvMethodGet" title="Use the GET method for sending the request to the (local) server">GET</label>
-                        <input id="SrvMethodPost" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {echo 'checked="checked"';}?> value="post">
+                        <input id="SrvMethodPost" name="servermethod" type="radio" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    echo 'checked="checked"';
+} ?> value="post">
                             <label for="SrvMethodPost" title="Use the POST method for sending the request to the (local) server">POST</label>
                         <br />
                         <input id="ButtonExternalScript" name="isExternal" type="checkbox">

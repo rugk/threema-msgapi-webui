@@ -13,16 +13,16 @@ use Threema\MsgApi\ConnectionSettings;
  *
  * Automatically calls CreateConnectionSettings and InitiateConnection.
  *
- * @param string $keystorePath file for public key store
- * @param bool $useTlsOptions whether to use advanced options or not
+ * @param string $keystorePath  file for public key store
+ * @param bool   $useTlsOptions whether to use advanced options or not
  *
  * @return Connection $connector
  */
 function CreateConnection($keystorePath = __DIR__ . '/../keystore.php', $useTlsOptions = true)
 {
     $publicKeyStore = CreatePublicKeyStore($keystorePath);
-    $settings = CreateConnectionSettings($useTlsOptions);
-    $connector = InitiateConnection($settings, $publicKeyStore);
+    $settings       = CreateConnectionSettings($useTlsOptions);
+    $connector      = InitiateConnection($settings, $publicKeyStore);
 
     return $connector;
 }
@@ -79,8 +79,8 @@ function CreateConnectionSettings($useTlsOptions)
 /**
  * Initiates (starts) connection settings
  *
- * @param string $settings settings got by CreateConnectionSettings
- * @param bool $publicKeyStore file for PHP public key store
+ * @param string $settings       settings got by CreateConnectionSettings
+ * @param bool   $publicKeyStore file for PHP public key store
  *
  * @return Connection $connector
  */

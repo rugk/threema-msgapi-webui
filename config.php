@@ -4,3 +4,4 @@
 //visual options
 define('DISPLSUCC_PREREQ', true); //display successful checks in prerequisites
 define('DISPLSUCC_DEBUG', false); //display successful checks in debug
+

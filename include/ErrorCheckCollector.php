@@ -10,15 +10,15 @@
 
 class ErrorChkColl
 {
-    const ERR_NONE = 0;
+    const ERR_NONE    = 0;
     const ERR_WARNING = 1;
-    const ERR_ERROR = 2;
+    const ERR_ERROR   = 2;
 
     const CHAR_MULTIPLE_MSG = ' ';
 
-    const ERR_NONE_PIC = 'assets/img/tick.svg';
+    const ERR_NONE_PIC    = 'assets/img/tick.svg';
     const ERR_WARNING_PIC = 'assets/img/warning.svg';
-    const ERR_ERROR_PIC = 'assets/img/cross.svg';
+    const ERR_ERROR_PIC   = 'assets/img/cross.svg';
 
     /**
      * Saves all the infromation about the error checks
@@ -39,10 +39,10 @@ class ErrorChkColl
         var_dump($this->checkedErrors);
     }
 
-    public function RegisterGenericMessages($groupIdentifier, $checkIdentifier, $successMsg, $errorMsg='')
+    public function RegisterGenericMessages($groupIdentifier, $checkIdentifier, $successMsg, $errorMsg = '')
     {
         $this->checkedErrors[$groupIdentifier][$checkIdentifier]['successMsg'] = $successMsg;
-        $this->checkedErrors[$groupIdentifier][$checkIdentifier]['errorMsg'] = $errorMsg;
+        $this->checkedErrors[$groupIdentifier][$checkIdentifier]['errorMsg']   = $errorMsg;
     }
 
     public function RegisterResult($groupIdentifier, $checkIdentifier, $result, $errorType, $errorMsg)
@@ -68,7 +68,7 @@ class ErrorChkColl
         return $this->RegisterResult($groupIdentifier, $checkIdentifier, false, self::ERR_WARNING, $errorMsg);
     }
 
-    public function RegisterError($groupIdentifier, $checkIdentifier, $errorMsg  ='')
+    public function RegisterError($groupIdentifier, $checkIdentifier, $errorMsg  = '')
     {
         return $this->RegisterResult($groupIdentifier, $checkIdentifier, false, self::ERR_ERROR, $errorMsg);
     }
@@ -76,19 +76,19 @@ class ErrorChkColl
     /**
      * Returns an array with all checks and errors of a specific group.
      *
-     * @param string $groupIdentifier The unique string of a group of checks.
-     * @param bool $autoSuccess Automatically set unknown checks to successful,
-     *                          if disabled these checks are ignored.
+     * @param  string $groupIdentifier The unique string of a group of checks.
+     * @param  bool   $autoSuccess     Automatically set unknown checks to successful,
+     *                                 if disabled these checks are ignored.
      * @return array
      */
     public function EvaluateChecks($groupIdentifier, $autoSuccess = true)
     {
-        $resultArray = [];
+        $resultArray     = [];
         $groupWorstError = 0;
 
         if ($autoSuccess) {
             //check whether there are some identifier without an result
-            foreach($this->checkedErrors[$groupIdentifier] as $checkIdentifier=>$checkContent) {
+            foreach ($this->checkedErrors[$groupIdentifier] as $checkIdentifier => $checkContent) {
                 //automatically register success if there is no error registered
                 if (!array_key_exists('errors', $checkContent)) {
                     $this->RegisterSuccess($groupIdentifier, $checkIdentifier);
@@ -97,10 +97,10 @@ class ErrorChkColl
         }
 
         //go through every $checkIdentifier
-        foreach($this->checkedErrors[$groupIdentifier] as $checkIdentifier=>$checkContent) {
+        foreach ($this->checkedErrors[$groupIdentifier] as $checkIdentifier => $checkContent) {
             $successMsgCollect = '';
-            $errorMsgCollect = '';
-            $errorTypeCollect = 0;
+            $errorMsgCollect   = '';
+            $errorTypeCollect  = 0;
 
             //ignore missing error keys
             if (!array_key_exists('errors', $checkContent)) {
@@ -108,7 +108,7 @@ class ErrorChkColl
             }
 
             // go through every checked error
-            foreach($checkContent['errors'] as $errorCheck) {
+            foreach ($checkContent['errors'] as $errorCheck) {
                 if ($errorCheck['errorType'] == self::ERR_NONE) {
                     //collect information about the success
                     if ($successMsgCollect != '') {
@@ -138,14 +138,14 @@ class ErrorChkColl
             //check whether there is an error in the whole identifier
             if ($errorTypeCollect == 0) {
                 //no error
-                $resultArray[$checkIdentifier]['error'] = self::ERR_NONE;
+                $resultArray[$checkIdentifier]['error']          = self::ERR_NONE;
                 $resultArray[$checkIdentifier]['genericMessage'] = $this->ValueOrEmpty($checkContent, "successMsg");
-                $resultArray[$checkIdentifier]['message'] = $successMsgCollect;
+                $resultArray[$checkIdentifier]['message']        = $successMsgCollect;
             } else {
                 //there is an error
-                $resultArray[$checkIdentifier]['error'] = $errorTypeCollect;
+                $resultArray[$checkIdentifier]['error']          = $errorTypeCollect;
                 $resultArray[$checkIdentifier]['genericMessage'] = $this->ValueOrEmpty($checkContent, "errorMsg");
-                $resultArray[$checkIdentifier]['message'] = $errorMsgCollect;
+                $resultArray[$checkIdentifier]['message']        = $errorMsgCollect;
             }
         }
 
@@ -157,13 +157,13 @@ class ErrorChkColl
     /**
      * Returns an array with all checks and errors of a specific group.
      *
-     * @param array $evaluatedArray An evaluate array returned by EvaluateChecks.
+     * @param  array $evaluatedArray An evaluate array returned by EvaluateChecks.
      * @return void
      */
     public function ShowErrors($evaluatedArray, $showSuccess = true)
     {
         // go through every error and write it
-        foreach($evaluatedArray as $check) {
+        foreach ($evaluatedArray as $check) {
             if (!is_array($check)) {
                 //skip non-array content
                 continue;
@@ -177,7 +177,7 @@ class ErrorChkColl
     /**
      * Returns true if there is a stopping error in the evaluation.
      *
-     * @param array $evaluatedArray An evaluate array returned by EvaluateChecks.
+     * @param  array $evaluatedArray An evaluate array returned by EvaluateChecks.
      * @return bool
      */
     public function IsBreakpoint($evaluatedArray)
@@ -198,7 +198,7 @@ class ErrorChkColl
         }
 
         echo '<div class="check">';
-        switch($errorType) {
+        switch ($errorType) {
             case self::ERR_NONE:
                 echo '<img class="graphicon" src="' . self::ERR_NONE_PIC . '" alt="tick" />' . PHP_EOL;
                 echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;

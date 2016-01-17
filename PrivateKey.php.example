@@ -3,3 +3,4 @@
 define('MSGAPI_PRIVATE_KEY', 'private:94af3260fa2a19adc8e82e82be598be15bc6ad6f47c8ee303cb185ef860e16d2');
 //alternatively you may read the key from a file where you saved it earlier
 // define('MSGAPI_PRIVATE_KEY', trim(file_get_contents(__DIR__ . '/privateKey.txt')));
+

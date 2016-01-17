@@ -21,24 +21,24 @@ require_once 'include/PublicKey.php';
 require_once 'include/GetPost.php';
 
 //parameters
-$threemaId = null;
-$message = null;
-$messageId = null;
+$threemaId    = null;
+$message      = null;
+$messageId    = null;
 $errorMessage = null;
 
 /**
  * Send a message to a Threema ID.
  *
  * @param Connection $connector connector
- * @param string $threemaId The id whose public key should be fetched
- * @param string $message The message to send (max 3500 characters)
+ * @param string     $threemaId The id whose public key should be fetched
+ * @param string     $message   The message to send (max 3500 characters)
  *
  * @return string|Exception
  */
 function SendMessage($connector, $threemaId, $message)
 {
     $e2eHelper = new \Threema\MsgApi\Helpers\E2EHelper(KeyHexToBin(MSGAPI_PRIVATE_KEY), $connector);
-    $result = $e2eHelper->sendTextMessage($threemaId, $message);
+    $result    = $e2eHelper->sendTextMessage($threemaId, $message);
 
     if (true === $result->isSuccess()) {
         return $result->getMessageId();
@@ -52,7 +52,7 @@ if (ReturnGetPost('recieverid') &&
     preg_match('/' . REGEXP_THREEMAID_ANY . '/', ReturnGetPost('recieverid'))
 ) {
     $threemaId = htmlentities(ReturnGetPost('recieverid'));
-    $message = ReturnGetPost('message');
+    $message   = ReturnGetPost('message');
 }
 
 //create connection
