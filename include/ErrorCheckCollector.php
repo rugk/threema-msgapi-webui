@@ -34,11 +34,6 @@ class ErrorChkColl
      */
     private $checkedErrors = [];
 
-    public function debugDumpArray()
-    {
-        var_dump($this->checkedErrors);
-    }
-
     public function registerGenericMessages($groupIdentifier, $checkIdentifier, $successMsg, $errorMsg = '')
     {
         $this->checkedErrors[$groupIdentifier][$checkIdentifier]['successMsg'] = $successMsg;
