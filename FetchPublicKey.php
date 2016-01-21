@@ -27,7 +27,8 @@ require_once 'include/GetPost.php';
  * @param Connection $connector connector
  * @param string     $threemaId The id whose public key should be fetched
  *
- * @return string|Exception
+ * @return string
+ * @throws Exception
  */
 function FetchPublicKey(Connection $connector, $threemaId)
 {

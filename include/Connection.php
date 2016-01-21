@@ -49,7 +49,7 @@ function CreatePublicKeyStore($keystorePath)
  *
  * @param bool $useTlsOptions whether to use advanced options or not
  *
- * @return ConnectionSettings $settings connection settings
+ * @return ConnectionSettings
  */
 function CreateConnectionSettings($useTlsOptions)
 {
@@ -79,12 +79,12 @@ function CreateConnectionSettings($useTlsOptions)
 /**
  * Initiates (starts) connection settings.
  *
- * @param string $settings       settings got by CreateConnectionSettings
- * @param bool   $publicKeyStore file for PHP public key store
+ * @param ConnectionSettings $settings       settings got by CreateConnectionSettings
+ * @param PhpFile   $publicKeyStore public key store
  *
  * @return Connection $connector
  */
-function InitiateConnection($settings, $publicKeyStore)
+function InitiateConnection(ConnectionSettings $settings, PhpFile $publicKeyStore)
 {
     return new Connection($settings, $publicKeyStore);
 }

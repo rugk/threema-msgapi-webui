@@ -30,12 +30,13 @@ $errorMessage = null;
  * Send a message to a Threema ID.
  *
  * @param Connection $connector connector
- * @param string     $threemaId The id whose public key should be fetched
+ * @param string     $threemaId The id where the message should be send to
  * @param string     $message   The message to send (max 3500 characters)
  *
- * @return string|Exception
+ * @return integer
+ * @throws Exception
  */
-function SendMessage($connector, $threemaId, $message)
+function SendMessage(Connection $connector, $threemaId, $message)
 {
     $e2eHelper = new \Threema\MsgApi\Helpers\E2EHelper(KeyHexToBin(MSGAPI_PRIVATE_KEY), $connector);
     $result    = $e2eHelper->sendTextMessage($threemaId, $message);
