@@ -21,7 +21,7 @@ class ErrorChkColl
     const ERR_ERROR_PIC   = 'assets/img/cross.svg';
 
     /**
-     * Saves all the infromation about the error checks.
+     * Saves all the information about the error checks.
      *
      * format:
      *  - a group ($groupIdentifier)
@@ -196,17 +196,15 @@ class ErrorChkColl
         switch ($errorType) {
             case self::ERR_NONE:
                 echo '<img class="graphicon" src="' . self::ERR_NONE_PIC . '" alt="tick" />' . PHP_EOL;
-                echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;
                 break;
             case self::ERR_WARNING:
                 echo '<img class="graphicon" src="' . self::ERR_WARNING_PIC . '" alt="warning" />' . PHP_EOL;
-                echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;
                 break;
             case self::ERR_ERROR:
                 echo '<img class="graphicon" src="' . self::ERR_ERROR_PIC . '" alt="error" />' . PHP_EOL;
-                echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;
                 break;
         }
+        echo '<span class="checkdescr">' . $fullMsg . '</span>' . PHP_EOL;
         echo '</div>';
     }
 

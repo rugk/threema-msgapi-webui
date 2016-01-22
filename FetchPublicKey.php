@@ -24,13 +24,13 @@ require_once 'include/GetPost.php';
 /**
  * Fetches the public key of an ID from the Threema server.
  *
- * @param Connection $connector connector
- * @param string     $threemaId The id whose public key should be fetched
+ * @param Threema\MsgApi\Connection $connector connector
+ * @param string                    $threemaId The id whose public key should be fetched
  *
- * @return string
  * @throws Exception
+ * @return string
  */
-function FetchPublicKey(Connection $connector, $threemaId)
+function FetchPublicKey(Threema\MsgApi\Connection $connector, $threemaId)
 {
     $result = $connector->fetchPublicKey($threemaId);
     if ($result->isSuccess()) {

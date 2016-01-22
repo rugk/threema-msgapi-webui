@@ -13,6 +13,9 @@ engines:
         enabled: false #who cares about compatibility with IE 6/7?
   fixme:
     enabled: true
+    exclude_fingerprints:
+    - c19c0332e1b825dd4f9222d5bc21f0a9 #todo in assets/favicon/rfg_request.json
+    - 84c8539ac58fe954b23b6f3b2d53a4ac #assets/favicon/rfg_request_notinline.json
   phpcodesniffer:
     enabled: true
     checks:

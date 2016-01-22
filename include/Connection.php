@@ -79,12 +79,12 @@ function CreateConnectionSettings($useTlsOptions)
 /**
  * Initiates (starts) connection settings.
  *
- * @param ConnectionSettings $settings       settings got by CreateConnectionSettings
- * @param PhpFile   $publicKeyStore public key store
+ * @param Threema\MsgApi\ConnectionSettings $settings       settings got by CreateConnectionSettings
+ * @param Threema\MsgApi\PublicKeyStores\PhpFile           $publicKeyStore public key store
  *
  * @return Connection $connector
  */
-function InitiateConnection(ConnectionSettings $settings, PhpFile $publicKeyStore)
+function InitiateConnection(Threema\MsgApi\ConnectionSettings $settings, Threema\MsgApi\PublicKeyStores\PhpFile $publicKeyStore)
 {
     return new Connection($settings, $publicKeyStore);
 }
