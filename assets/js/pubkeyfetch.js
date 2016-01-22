@@ -35,7 +35,7 @@ function UpdatePubKey(input, output) {
   //vars
   var xhttp = new XMLHttpRequest();
   var threemaid = input.value;
-  var result
+  var result;
 
   //show on change
   xhttp.onreadystatechange = function() {

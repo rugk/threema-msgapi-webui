@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rugk/threema-msgapi-sdk-php.git",
-                "reference": "c8875b4806b6778be7dd10a60bdba3567752bddd"
+                "reference": "bd0aa002ad331a1842596cc607e5f72e256f51b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rugk/threema-msgapi-sdk-php/zipball/c8875b4806b6778be7dd10a60bdba3567752bddd",
-                "reference": "c8875b4806b6778be7dd10a60bdba3567752bddd",
+                "url": "https://api.github.com/repos/rugk/threema-msgapi-sdk-php/zipball/bd0aa002ad331a1842596cc607e5f72e256f51b1",
+                "reference": "bd0aa002ad331a1842596cc607e5f72e256f51b1",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
                 "sms gateway",
                 "switzerland"
             ],
-            "time": "2016-01-16 23:10:39"
+            "time": "2016-01-17 10:20:54"
         }
     ],
     "packages-dev": [],
