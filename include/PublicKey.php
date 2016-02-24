@@ -15,7 +15,7 @@
 function KeyCheck($publicKey, $suffix = '')
 {
     // RegExp: https://regex101.com/r/sU5tC8/1
-    return preg_match('/^(' . $suffix . ')?[[:alnum:]]{64}$/', $publicKey) == true;
+    return preg_match('/^(' . $suffix . ')?[[:alnum:]]{64}$/', $publicKey) != 0;
 }
 
 /**
