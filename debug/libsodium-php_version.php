@@ -14,7 +14,7 @@ $ext = new ReflectionExtension('libsodium');
 var_dump($ext->getVersion());
 
 $timeEnd = microtime();
-echo $EOL.$timeEnd-$timeStart.'s'.$EOL;
+echo $EOL.$timeEnd-$timeStart.' μs'.$EOL;
 
 // method2
 echo $EOL;
@@ -23,4 +23,4 @@ $timeStart = microtime();
 var_dump(phpversion('libsodium'));
 
 $timeEnd = microtime();
-echo $EOL.$timeEnd-$timeStart.'s'.$EOL;
+echo $EOL.$timeEnd-$timeStart.' μs'.$EOL;
